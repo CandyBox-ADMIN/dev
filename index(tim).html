@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🍬</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #fff8fb;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    header button {
+      background: #ff4da6;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    header button:hover {
+      background: #ff1f8f;
+    }
+    img {
+      width: 180px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #ff4da6;
+      margin-bottom: 30px;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 900px;
+    }
+    button.action-btn {
+      background: white;
+      border: 2px solid #ff4da6;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button.action-btn:hover {
+      background: #ff4da6;
+      color: white;
+      transform: scale(1.05);
+    }
+    #penseBete {
+      margin-top: 40px;
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      border: 2px dashed #ff4da6;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: left;
+    }
+    #penseBete h3 {
+      margin-top: 0;
+      color: #ff4da6;
+    }
+    #penseBete textarea {
+      width: 100%;
+      height: 120px;
+      border: none;
+      outline: none;
+      resize: none;
+      font-size: 15px;
+      font-family: "Poppins", sans-serif;
+      background: none;
+      color: #333;
+    }
+    .saved {
+      color: #999;
+      font-size: 13px;
+      margin-top: 5px;
+      text-align: right;
+    }
+
+    /* Overlay Déconnexion */
+    #overlay {
+      display: none; /* caché par défaut */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #overlay div {
+      background: white;
+      padding: 40px 60px;
+      border-radius: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff4da6;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button onclick="deconnexion()">🔒 Déconnexion</button>
+  </header>
+
+  <img src="https://framerusercontent.com/images/wXspVf9QpQD9vwcCDaMcQuVIkc.png?width=419&height=124" alt="Candy Box Logo" />
+  <h1>Hey, Tim 🍬</h1>
+
+  <div class="buttons">
+    <button class="action-btn" onclick="window.open('https://eu.jotform.com/252625644692363')">➕ Nouvelle commande</button>
+    <button class="action-btn" onclick="window.open('https://eu.jotform.com/report/25263378851506221')">📊 Voir les statistiques</button>
+    <button class="action-btn" onclick="window.open('https://www.canva.com')">🎨 Créer un visuel</button>
+    <button class="action-btn" onclick="window.open('https://wa.me/33651366888">📱 Ouvrir WhatsApp</button>
+    <button class="action-btn" onclick="window.open('https://chat.openai.com')">🤖 Ouvrir ChatGPT</button>
+    <button class="action-btn" onclick="window.open('https://candy-box.framer.website/')">🛍️ Accès boutique / site public</button>
+  </div>
+
+  <div id="penseBete">
+    <h3>🧠 Pense-bête</h3>
+    <textarea id="notes" placeholder="Écris ici tes notes, idées ou rappels..."></textarea>
+    <div class="saved" id="savedMessage">💾 Notes enregistrées automatiquement</div>
+  </div>
+
+  <!-- Overlay Déconnexion -->
+  <div id="overlay">
+    <div>Déconnexion réussie !</div>
+  </div>
+
+  <script>
+    const notes = document.getElementById("notes");
+    const savedMsg = document.getElementById("savedMessage");
+
+    // Charger les notes sauvegardées
+    notes.value = localStorage.getItem("penseBeteNotes") || "";
+
+    // Sauvegarde automatique à chaque modification
+    notes.addEventListener("input", () => {
+      localStorage.setItem("penseBeteNotes", notes.value);
+      savedMsg.style.opacity = "1";
+      setTimeout(() => savedMsg.style.opacity = "0.6", 2000);
+    });
+
+    function deconnexion() {
+      // Afficher l'overlay au clic
+      const overlay = document.getElementById('overlay');
+      overlay.style.display = 'flex';
+
+      // Bloquer toutes les interactions derrière
+      document.body.style.overflow = 'hidden';
+
+      // Ouvrir Canva dans un nouvel onglet après 1 seconde
+      setTimeout(() => {
+        window.open('https://authentification-candy-box.my.canva.site/', '_blank');
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
