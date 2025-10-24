@@ -1,189 +1,211 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Candy Box 🍬</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Authentification Candy Box</title>
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: #fff8fb;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
+    :root{
+      --pink:#ff6fb5;
+      --light-pink:#fff2f8;
+      --border-pink:#ff9acb;
+      --text:#333;
+      --card-bg:#fff;
     }
-    header {
-      width: 100%;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-    header button {
-      background: #ff4da6;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    header button:hover {
-      background: #ff1f8f;
-    }
-    img {
-      width: 180px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      color: #ff4da6;
-      margin-bottom: 30px;
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 15px;
-      width: 100%;
-      max-width: 900px;
-    }
-    button.action-btn {
-      background: white;
-      border: 2px solid #ff4da6;
-      border-radius: 12px;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button.action-btn:hover {
-      background: #ff4da6;
-      color: white;
-      transform: scale(1.05);
-    }
-    #penseBete {
-      margin-top: 40px;
-      width: 90%;
-      max-width: 600px;
-      background: white;
-      border: 2px dashed #ff4da6;
-      border-radius: 15px;
-      padding: 20px;
-      text-align: left;
-    }
-    #penseBete h3 {
-      margin-top: 0;
-      color: #ff4da6;
-    }
-    #penseBete textarea {
-      width: 100%;
-      height: 120px;
-      border: none;
-      outline: none;
-      resize: none;
-      font-size: 15px;
-      font-family: "Poppins", sans-serif;
-      background: none;
-      color: #333;
-    }
-    .saved {
-      color: #999;
-      font-size: 13px;
-      margin-top: 5px;
-      text-align: right;
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Poppins", Arial, sans-serif;
+      background: linear-gradient(180deg, #fff8fb 0%, #fffdfb 100%);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    /* Overlay Déconnexion */
-    #overlay {
-      display: none; /* caché par défaut */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
+    .container{
+      width:100%;
+      max-width:420px;
+      padding:20px;
+      box-sizing:border-box;
     }
-    #overlay div {
-      background: white;
-      padding: 40px 60px;
-      border-radius: 20px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #ff4da6;
-      text-align: center;
+
+    /* Popup / card */
+    .card{
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--light-pink) 100%);
+      border-radius:14px;
+      padding:24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border:4px solid transparent;
+      position:relative;
+      overflow:visible;
+      text-align:center;
+    }
+
+    /* Pink outline */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-6px;
+      border-radius:18px;
+      background:transparent;
+      border:3px solid var(--border-pink);
+      pointer-events:none;
+      box-shadow:0 6px 20px rgba(255,105,180,0.06);
+    }
+
+    .logo img{
+      max-width:320px;
+      width:100%;
+      height:auto;
+      margin-bottom:14px;
+    }
+
+    h2{
+      margin:0 0 14px 0;
+      font-size:20px;
+      color:var(--pink);
+    }
+
+    .desc{
+      margin-bottom:16px;
+      color:#666;
+      font-size:14px;
+    }
+
+    .form-row{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:12px;
+    }
+
+    input[type="password"]{
+      padding:12px 14px;
+      font-size:16px;
+      border-radius:10px;
+      border:1px solid #e6d6e3;
+      outline:none;
+      background:#fff;
+    }
+    input[type="password"]::placeholder{
+      color:#caa8b9;
+    }
+
+    .actions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:8px;
+    }
+
+    .remember{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      color:#555;
+    }
+
+    .btn{
+      background:var(--pink);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow:0 6px 16px rgba(255,111,181,0.15);
+    }
+    .btn:active{ transform:translateY(1px); }
+
+    .note{
+      margin-top:12px;
+      font-size:13px;
+      color:#9a7a8f;
+      text-align:center;
     }
   </style>
 </head>
 <body>
-  <header>
-    <button onclick="deconnexion()">🔒 Déconnexion</button>
-  </header>
+  <div class="container" role="main" aria-labelledby="auth-title">
+    <div class="card" role="dialog" aria-modal="true" aria-label="Authentification Candy Box">
+      <!-- Logo à l'intérieur du popup -->
+      <div class="logo">
+        <img src="https://framerusercontent.com/images/wXspVf9QpQD9vwcCDaMcQuVIkc.png?width=419&height=124" alt="Candy Box - logo">
+      </div>
 
-  <img src="https://framerusercontent.com/images/wXspVf9QpQD9vwcCDaMcQuVIkc.png?width=419&height=124" alt="Candy Box Logo" />
-  <h1>Espace Administrateur 🍬</h1>
+      <h2 id="auth-title">Authentification Candy Box</h2>
+      <p class="desc">Entrez votre mot de passe pour accéder à votre espace employé.</p>
 
-  <div class="buttons">
-    <button class="action-btn" onclick="window.open('https://eu.jotform.com/tables/252625644692363')">📦 Voir les commandes</button>
-    <button class="action-btn" onclick="window.open('https://eu.jotform.com/inbox/252625644692363/edit')">✏️ Modifier une commande</button>
-    <button class="action-btn" onclick="window.open('https://eu.jotform.com/252625644692363')">➕ Nouvelle commande</button>
-    <button class="action-btn" onclick="window.open('https://eu.jotform.com/build/252625644692363')">⚙️ Modifier le formulaire</button>
-    <button class="action-btn" onclick="window.open('https://eu.jotform.com/tables/252625644692363/252633727084056')">📊 Voir les statistiques</button>
-    <button class="action-btn" onclick="window.open('https://www.canva.com')">🎨 Créer un visuel</button>
-    <button class="action-btn" onclick="window.open('https://mail.google.com/mail/u/0/#inbox?compose=new')">✉️ Envoyer un message</button>
-    <button class="action-btn" onclick="window.open('https://mail.google.com')">📧 Ouvrir Gmail</button>
-    <button class="action-btn" onclick="window.open('https://framer.com/projects/Candy-Box--7ix2SR9Csdx0UlcyZg60-7j4Tl?node=augiA20Il')">🧰 Modifier le site Candy Box</button>
-    <button class="action-btn" onclick="window.open('https://chat.openai.com')">🤖 Ouvrir ChatGPT</button>
-    <button class="action-btn" onclick="window.open('https://eu.jotform.com/pdf-editor/')">🧾 Télécharger les factures</button>
-    <button class="action-btn" onclick="window.open('https://candy-box.framer.website/')">🛍️ Accès boutique / site public</button>
-  </div>
+      <form id="loginForm" autocomplete="off" aria-describedby="note">
+        <div class="form-row">
+          <label for="password" style="display:none">Mot de Passe</label>
+          <input id="password" type="password" placeholder="Mot de Passe Personnel" aria-label="Mot de Passe Personnel" required />
+        </div>
 
-  <div id="penseBete">
-    <h3>🧠 Pense-bête</h3>
-    <textarea id="notes" placeholder="Écris ici tes notes, idées ou rappels..."></textarea>
-    <div class="saved" id="savedMessage">💾 Notes enregistrées automatiquement</div>
-  </div>
+        <div class="actions">
+          <label class="remember">
+            <input id="remember" type="checkbox" checked />
+            Se souvenir de moi
+          </label>
 
-  <!-- Overlay Déconnexion -->
-  <div id="overlay">
-    <div>Déconnexion réussie !</div>
+          <button type="submit" class="btn" id="submitBtn">Se connecter</button>
+        </div>
+
+        <p id="note" class="note" aria-live="polite"></p>
+      </form>
+    </div>
   </div>
 
   <script>
-    const notes = document.getElementById("notes");
-    const savedMsg = document.getElementById("savedMessage");
+    (function(){
+      const routes = {
+        "Ines2014": "https://candy-box.framer.website/authentification-candy-box-ines",
+        "Lena2014": "https://candy-box.framer.website/authentification-candy-box-lena",
+        "!!Maxime!!": "https://candy-box.framer.website/authentification-candy-box-maxime",
+        "20120915": "https://candy-box.framer.website/authentification-candy-box-abdallah",
+        "TimFateh!": "https://candy-box.framer.website/authentification-candy-box-tim"
+      };
 
-    // Charger les notes sauvegardées
-    notes.value = localStorage.getItem("penseBeteNotes") || "";
+      const form = document.getElementById('loginForm');
+      const input = document.getElementById('password');
+      const remember = document.getElementById('remember');
+      const note = document.getElementById('note');
 
-    // Sauvegarde automatique à chaque modification
-    notes.addEventListener("input", () => {
-      localStorage.setItem("penseBeteNotes", notes.value);
-      savedMsg.style.opacity = "1";
-      setTimeout(() => savedMsg.style.opacity = "0.6", 2000);
-    });
+      const LS_KEY = 'candybox_remember_pass';
 
-    function deconnexion() {
-      // Afficher l'overlay au clic
-      const overlay = document.getElementById('overlay');
-      overlay.style.display = 'flex';
+      // Auto-redirect si mot de passe mémorisé
+      try {
+        const saved = localStorage.getItem(LS_KEY);
+        if(saved && routes[saved]){
+          note.textContent = "Connexion automatique — redirection...";
+          setTimeout(()=> window.location.href = routes[saved], 700);
+        }
+      } catch(e){ console.warn('localStorage inaccessible', e); }
 
-      // Bloquer toutes les interactions derrière
-      document.body.style.overflow = 'hidden';
+      form.addEventListener('submit', function(ev){
+        ev.preventDefault();
+        const pw = input.value.trim();
+        if(!pw){ note.textContent = "Veuillez entrer un mot de passe."; return; }
 
-      // Ouvrir Canva dans un nouvel onglet après 1 seconde
-      setTimeout(() => {
-        window.open('https://authentification-candy-box.my.canva.site/', '_blank');
-      }, 1000);
-    }
+        if(routes[pw]){
+          if(remember.checked){
+            try { localStorage.setItem(LS_KEY, pw); } catch(e){ console.warn(e); }
+          } else {
+            try { localStorage.removeItem(LS_KEY); } catch(e){}
+          }
+
+          note.textContent = "Mot de passe correct — redirection...";
+          setTimeout(()=> { window.location.href = routes[pw]; }, 500);
+        } else {
+          note.textContent = "Mot de passe incorrect. Réessaie.";
+          input.value = "";
+          input.focus();
+        }
+      });
+    })();
   </script>
 </body>
 </html>
