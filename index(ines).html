@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🍬</title>
+  <title>Espace Ines 🍬</title>
   <style>
     body {
       font-family: "Poppins", sans-serif;
@@ -16,11 +16,12 @@
       min-height: 100vh;
       margin: 0;
       padding: 20px;
+      position: relative;
     }
     header {
       width: 100%;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
     }
@@ -101,12 +102,10 @@
 
     /* Overlay Déconnexion */
     #overlay {
-      display: none; /* caché par défaut */
+      display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.6);
       z-index: 9999;
       align-items: center;
@@ -121,11 +120,74 @@
       color: #ff4da6;
       text-align: center;
     }
+
+    /* Popup profil */
+    #profilPopup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .profil-card {
+      background: #fff8fb;
+      border: 2px solid #ff4da6;
+      border-radius: 16px;
+      padding: 25px 30px;
+      text-align: center;
+      max-width: 320px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .profil-card h2 {
+      color: #ff4da6;
+      margin-bottom: 8px;
+    }
+    .profil-card p {
+      margin: 5px 0;
+    }
+    .niveau {
+      font-weight: bold;
+      color: #ff4da6;
+      margin-top: 10px;
+    }
+    .help {
+      cursor: pointer;
+      color: #888;
+      margin-left: 5px;
+    }
+    .help:hover { color: #555; }
+    .popup-text {
+      background: white;
+      border: 1px solid #ffc1df;
+      border-radius: 8px;
+      padding: 8px;
+      margin-top: 10px;
+      text-align: left;
+      font-size: 14px;
+      display: none;
+    }
+    .profil-card button {
+      margin-top: 12px;
+      background: #ff4da6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .profil-card button:hover {
+      background: #ff1f8f;
+    }
   </style>
 </head>
 <body>
   <header>
     <button onclick="deconnexion()">🔒 Déconnexion</button>
+    <button onclick="ouvrirProfil()">👤 Mon profil</button>
   </header>
 
   <img src="https://framerusercontent.com/images/wXspVf9QpQD9vwcCDaMcQuVIkc.png?width=419&height=124" alt="Candy Box Logo" />
@@ -135,7 +197,7 @@
     <button class="action-btn" onclick="window.open('https://eu.jotform.com/252625644692363')">➕ Nouvelle commande</button>
     <button class="action-btn" onclick="window.open('https://eu.jotform.com/report/25263378851506221')">📊 Voir les statistiques</button>
     <button class="action-btn" onclick="window.open('https://www.canva.com')">🎨 Créer un visuel</button>
-    <button class="action-btn" onclick="window.open('https://wa.me/33651366888">📱 Ouvrir WhatsApp</button>
+    <button class="action-btn" onclick="window.open('https://wa.me/33651366888')">📱 Ouvrir WhatsApp</button>
     <button class="action-btn" onclick="window.open('https://chat.openai.com')">🤖 Ouvrir ChatGPT</button>
     <button class="action-btn" onclick="window.open('https://candy-box.framer.website/')">🛍️ Accès boutique / site public</button>
   </div>
@@ -147,18 +209,33 @@
   </div>
 
   <!-- Overlay Déconnexion -->
-  <div id="overlay">
-    <div>Déconnexion réussie !</div>
+  <div id="overlay"><div>Déconnexion réussie !</div></div>
+
+  <!-- Popup profil -->
+  <div id="profilPopup">
+    <div class="profil-card">
+      <h2>Profil employé</h2>
+      <p><strong>Nom :</strong> Ines</p>
+      <p><strong>Mot de passe :</strong> Ines2014</p>
+      <p class="niveau">
+        Niveau 2
+        <span class="help" onclick="toggleHelp()">❓</span>
+      </p>
+      <div class="popup-text" id="helpText">
+        <p><strong>Niveau 1 (5 €) :</strong> Sort pas beaucoup, assez timide.</p>
+        <p><strong>Niveau 2 (10 €) :</strong> Sort peu, mais déjà expérimenté(e).</p>
+        <p><strong>Niveau 3 (15 €) :</strong> Sort souvent, à l’aise et efficace.</p>
+        <p><strong>Niveau 4 (20 €) :</strong> Très actif(ve), excellent contact client.</p>
+      </div>
+      <button onclick="changerMotDePasse()">Changer le mot de passe</button><br><br>
+      <button onclick="fermerProfil()" style="background:#ccc; color:#333;">Fermer</button>
+    </div>
   </div>
 
   <script>
     const notes = document.getElementById("notes");
     const savedMsg = document.getElementById("savedMessage");
-
-    // Charger les notes sauvegardées
     notes.value = localStorage.getItem("penseBeteNotes") || "";
-
-    // Sauvegarde automatique à chaque modification
     notes.addEventListener("input", () => {
       localStorage.setItem("penseBeteNotes", notes.value);
       savedMsg.style.opacity = "1";
@@ -166,17 +243,27 @@
     });
 
     function deconnexion() {
-      // Afficher l'overlay au clic
       const overlay = document.getElementById('overlay');
       overlay.style.display = 'flex';
-
-      // Bloquer toutes les interactions derrière
       document.body.style.overflow = 'hidden';
-
-      // Ouvrir Canva dans un nouvel onglet après 1 seconde
       setTimeout(() => {
-        window.open('https://authentification-candy-box.my.canva.site/', '_blank');
-      }, 1000);
+        window.location.href = 'https://candy-box.framer.website/deconnexion-candy-box';
+      }, 1200);
+    }
+
+    function ouvrirProfil() {
+      document.getElementById('profilPopup').style.display = 'flex';
+    }
+    function fermerProfil() {
+      document.getElementById('profilPopup').style.display = 'none';
+      document.getElementById('helpText').style.display = 'none';
+    }
+    function changerMotDePasse() {
+      window.open('https://wa.me/33651366888?text=Bonjour%2C%20je%20souhaite%20mettre%20%C3%A0%20jour%20mon%20mot%20de%20passe.%20Merci%20de%20bien%20vouloir%20enregistrer%20le%20nouveau%20mot%20de%20passe%20suivant%20%3A');
+    }
+    function toggleHelp() {
+      const help = document.getElementById('helpText');
+      help.style.display = help.style.display === 'block' ? 'none' : 'block';
     }
   </script>
 </body>
